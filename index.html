@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible E-Commerce</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+        <h1>Bienvenido</h1>
+    </header>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">E-Commerce</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#products">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container my-4">
+        <section id="products" class="text-center">
+            <h2>Catalogo de Sneakers </h2>
+            <div class="row">
+                <div class="col-md-4"><img src="product1.jpg" alt="Tenis negros con el logo rojo" class="img-fluid"></div>
+                <div class="col-md-4"><img src="product2.jpg" alt="Tenis grises con blancos" class="img-fluid"></div>
+                <div class="col-md-4"><img src="product3.jpg" alt="Tenis gris claro con negro" class="img-fluid"></div>
+            </div>
+        </section>
+        
+        <section class="my-4">
+            <h2>Product Prices</h2>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Product 1</td>
+                        <td>$3,199.00</td>
+                    </tr>
+                    <tr>
+                        <td>Product 2</td>
+                        <td>$1,500.00</td>
+                    </tr>
+                    <tr>
+                        <td>Product 3</td>
+                        <td>$2,200.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="discover">
+            <h3>Descubre mas modelos en:</h3>
+            <a href="https://www.nike.com/mx/w/calzado-3rauvznik1zy7ok" target="_blank">Nike.com</a>
+        </section>
+
+        <section id="contact" class="my-4">
+            <h2>Contact Us</h2>
+            <form class="w-50 mx-auto">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 Our Store. All rights reserved.</p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
