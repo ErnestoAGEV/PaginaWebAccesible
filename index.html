@@ -1,699 +1,1151 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tienda en línea de sneakers y calzado deportivo con las mejores marcas y precios accesibles.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tienda en línea de sneakers y calzado deportivo con las mejores marcas y precios accesibles."
+    />
     <title>Tienda de Sneakers Accesible | E-Commerce</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        /* Mejoras de accesibilidad para CSS */
-        :root {
-            /* Colores con alto contraste (relación mínima 4.5:1 para texto normal) */
-            --main-color: #0056b3;
-            --main-color-dark: #004080;
-            --accent-color: #e65c00;
-            --light-bg: #f8f9fa;
-            --dark-bg: #1a1a1a;
-            --text-color: #212529;
-            --text-light: #ffffff;
-            --error-color: #bc0000;
-            --success-color: #006e00;
-            --focus-color: #ff8000;
-        }
+      /* Mejoras de accesibilidad para CSS */
+      :root {
+        /* Colores con alto contraste (relación mínima 4.5:1 para texto normal) */
+        --main-color: #0056b3;
+        --main-color-dark: #004080;
+        --accent-color: #e65c00;
+        --light-bg: #f8f9fa;
+        --dark-bg: #1a1a1a;
+        --text-color: #212529;
+        --text-light: #ffffff;
+        --error-color: #bc0000;
+        --success-color: #006e00;
+        --focus-color: #ff8000;
+      }
 
-        /* Enfoque mejorado y consistente para todos los elementos interactivos */
-        :focus-visible {
-            outline: 3px solid var(--focus-color);
-            outline-offset: 4px;
-            border-radius: 2px;
-            box-shadow: 0 0 0 2px white;
-        }
+      /* Enfoque mejorado y consistente para todos los elementos interactivos */
+      :focus-visible {
+        outline: 3px solid var(--focus-color);
+        outline-offset: 4px;
+        border-radius: 2px;
+        box-shadow: 0 0 0 2px white;
+      }
 
-        /* Modo de alto contraste para navegadores que lo soportan */
-        @media (forced-colors: active) {
-            :focus {
-                outline: 3px solid CanvasText;
-            }
-            .btn {
-                border: 2px solid currentColor;
-            }
+      /* Modo de alto contraste para navegadores que lo soportan */
+      @media (forced-colors: active) {
+        :focus {
+          outline: 3px solid CanvasText;
         }
-
-        /* Tipografía accesible */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            font-size: 1rem;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        /* Reducción de movimiento para usuarios que lo prefieren */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.001ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.001ms !important;
-                scroll-behavior: auto !important;
-            }
-            .product-card:hover, .product-card:focus-within {
-                transform: none;
-            }
-        }
-
-        /* Enlaces con subrayado para mejor visibilidad */
-        a {
-            color: var(--main-color);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            text-decoration-thickness: from-font;
-        }
-
-        a:hover, a:focus {
-            color: var(--main-color-dark);
-            text-decoration: underline;
-            text-decoration-thickness: 3px;
-        }
-
-        /* Contraste mejorado para encabezados */
-        header {
-            background-color: var(--main-color);
-            color: var(--text-light);
-            padding: 1.5rem 0;
-        }
-
-        /* Navegación accesible */
-        .navbar {
-            padding: 0.8rem 0;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .nav-link {
-            padding: 0.5rem 1rem;
-            margin: 0 0.2rem;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-
-        .nav-link:hover, .nav-link:focus {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        /* Mejoras visuales para el producto */
-        .product-card {
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover, .product-card:focus-within {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .product-card img {
-            max-height: 200px;
-            object-fit: contain;
-            margin-bottom: 1rem;
-        }
-
-        .product-name {
-            font-weight: bold;
-            margin: 0.5rem 0;
-            font-size: 1.25rem;
-        }
-
-        .product-price {
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .product-card .product-details {
-            margin-top: auto;
-        }
-
-        /* Botones accesibles */
         .btn {
-            font-weight: 600;
-            padding: 0.75rem 1.25rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            position: relative;
-            text-decoration: none;
+          border: 2px solid currentColor;
+        }
+      }
+
+      /* Tipografía accesible */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        font-size: 1rem;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      /* Reducción de movimiento para usuarios que lo prefieren */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+        .product-card:hover,
+        .product-card:focus-within {
+          transform: none;
+        }
+      }
+
+      /* Enlaces con subrayado para mejor visibilidad */
+      a {
+        color: var(--main-color);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        text-decoration-thickness: from-font;
+      }
+
+      a:hover,
+      a:focus {
+        color: var(--main-color-dark);
+        text-decoration: underline;
+        text-decoration-thickness: 3px;
+      }
+
+      /* Contraste mejorado para encabezados */
+      header {
+        background-color: var(--main-color);
+        color: var(--text-light);
+        padding: 1.5rem 0;
+      }
+
+      /* Navegación accesible */
+      .navbar {
+        padding: 0.8rem 0;
+      }
+
+      .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .nav-link {
+        padding: 0.5rem 1rem;
+        margin: 0 0.2rem;
+        border-radius: 4px;
+        font-weight: 500;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      /* Mejoras visuales para el producto */
+      .product-card {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-card:hover,
+      .product-card:focus-within {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-card img {
+        max-height: 200px;
+        object-fit: contain;
+        margin-bottom: 1rem;
+      }
+
+      .product-name {
+        font-weight: bold;
+        margin: 0.5rem 0;
+        font-size: 1.25rem;
+      }
+
+      .product-price {
+        color: var(--accent-color);
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .product-card .product-details {
+        margin-top: auto;
+      }
+
+      /* Botones accesibles */
+      .btn {
+        font-weight: 600;
+        padding: 0.75rem 1.25rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        position: relative;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background-color: var(--main-color);
+        border-color: var(--main-color);
+        color: white;
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background-color: var(--main-color-dark);
+        border-color: var(--main-color-dark);
+      }
+
+      /* Tablas accesibles */
+      .table-responsive {
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+      }
+
+      .table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 0;
+      }
+
+      .table caption {
+        font-weight: bold;
+        padding: 0.75rem;
+        color: var(--text-color);
+        text-align: left;
+        caption-side: top;
+        background-color: #e9ecef;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .table th,
+      .table td {
+        padding: 0.75rem;
+        vertical-align: middle;
+      }
+
+      .table th {
+        background-color: var(--dark-bg);
+        color: var(--text-light);
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .table tbody tr:nth-child(odd) {
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+
+      /* Formulario accesible */
+      .form-label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .form-control {
+        padding: 0.75rem;
+        border: 2px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      .form-control:focus {
+        border-color: var(--main-color);
+        box-shadow: 0 0 0 0.25rem rgba(0, 86, 179, 0.25);
+      }
+
+      .form-control::placeholder {
+        color: #6c757d;
+        opacity: 0.7;
+      }
+
+      legend {
+        font-weight: bold;
+        padding: 0 0.5rem;
+        margin-bottom: 1rem;
+        width: auto;
+        font-size: 1.1rem;
+      }
+
+      fieldset {
+        border: 1px solid #dee2e6;
+        padding: 1.5rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Feedback visual para campos inválidos */
+      .form-control:invalid:not(:placeholder-shown) {
+        border-color: var(--error-color);
+      }
+
+      .form-control:valid:not(:placeholder-shown) {
+        border-color: var(--success-color);
+      }
+
+      .form-text {
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 0.875rem;
+      }
+
+      .error-message {
+        color: var(--error-color);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: none;
+      }
+
+      .form-control:invalid:not(:placeholder-shown) + .error-message {
+        display: block;
+      }
+
+      /* Mejorar accesibilidad de checkbox */
+      .form-check {
+        display: flex;
+        align-items: center;
+        padding-left: 0;
+        margin-bottom: 0.75rem;
+      }
+
+      .form-check-input {
+        margin-right: 0.5rem;
+        width: 1.25em;
+        height: 1.25em;
+        margin-top: 0;
+        vertical-align: middle;
+        flex-shrink: 0;
+      }
+
+      .form-check-label {
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+
+      /* Clase para enlaces de salto de navegación */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--main-color);
+        color: white;
+        padding: 10px 15px;
+        z-index: 1000;
+        transition: top 0.3s ease;
+        text-decoration: none;
+        border-radius: 0 0 4px 0;
+      }
+
+      .skip-link:focus {
+        top: 0;
+      }
+
+      /* Footer accesible */
+      footer {
+        background-color: var(--dark-bg);
+        color: var(--text-light);
+        padding: 3rem 0 2rem;
+        margin-top: 3rem;
+      }
+
+      footer a {
+        color: #a3ceff;
+      }
+
+      footer a:hover,
+      footer a:focus {
+        color: white;
+      }
+
+      footer h3 {
+        margin-bottom: 1.25rem;
+        font-size: 1.3rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      footer h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--accent-color);
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      /* Mejoras de accesibilidad para notificaciones */
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background-color: var(--success-color);
+        color: white;
+        border-radius: 4px;
+        z-index: 1050;
+        max-width: 300px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      .notification.error {
+        background-color: var(--error-color);
+      }
+
+      /* Tamaño de fuente ajustable */
+      @media (min-width: 768px) {
+        .font-size-control {
+          position: fixed;
+          bottom: 20px;
+          left: 20px;
+          background-color: white;
+          padding: 10px;
+          border-radius: 4px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          z-index: 1000;
         }
 
-        .btn-primary {
-            background-color: var(--main-color);
-            border-color: var(--main-color);
-            color: white;
+        .font-size-btn {
+          background-color: var(--main-color);
+          color: white;
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 4px;
+          margin: 0 5px;
+          font-weight: bold;
+          cursor: pointer;
         }
-
-        .btn-primary:hover, .btn-primary:focus {
-            background-color: var(--main-color-dark);
-            border-color: var(--main-color-dark);
-        }
-
-        /* Tablas accesibles */
-        .table-responsive {
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        .table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 0;
-        }
-
-        .table caption {
-            font-weight: bold;
-            padding: 0.75rem;
-            color: var(--text-color);
-            text-align: left;
-            caption-side: top;
-            background-color: #e9ecef;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table th, .table td {
-            padding: 0.75rem;
-            vertical-align: middle;
-        }
-
-        .table th {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .table tbody tr:nth-child(odd) {
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-
-        /* Formulario accesible */
-        .form-label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .form-control {
-            padding: 0.75rem;
-            border: 2px solid #ced4da;
-            border-radius: 4px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            width: 100%;
-            font-size: 1rem;
-        }
-
-        .form-control:focus {
-            border-color: var(--main-color);
-            box-shadow: 0 0 0 0.25rem rgba(0, 86, 179, 0.25);
-        }
-
-        .form-control::placeholder {
-            color: #6c757d;
-            opacity: 0.7;
-        }
-
-        legend {
-            font-weight: bold;
-            padding: 0 0.5rem;
-            margin-bottom: 1rem;
-            width: auto;
-            font-size: 1.1rem;
-        }
-
-        fieldset {
-            border: 1px solid #dee2e6;
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Feedback visual para campos inválidos */
-        .form-control:invalid:not(:placeholder-shown) {
-            border-color: var(--error-color);
-        }
-
-        .form-control:valid:not(:placeholder-shown) {
-            border-color: var(--success-color);
-        }
-
-        .form-text {
-            display: block;
-            margin-top: 0.25rem;
-            font-size: 0.875rem;
-        }
-
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-
-        .form-control:invalid:not(:placeholder-shown) + .error-message {
-            display: block;
-        }
-
-        /* Mejorar accesibilidad de checkbox */
-        .form-check {
-            display: flex;
-            align-items: center;
-            padding-left: 0;
-            margin-bottom: 0.75rem;
-        }
-
-        .form-check-input {
-            margin-right: 0.5rem;
-            width: 1.25em;
-            height: 1.25em;
-            margin-top: 0;
-            vertical-align: middle;
-            flex-shrink: 0;
-        }
-
-        .form-check-label {
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        /* Clase para enlaces de salto de navegación */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--main-color);
-            color: white;
-            padding: 10px 15px;
-            z-index: 1000;
-            transition: top 0.3s ease;
-            text-decoration: none;
-            border-radius: 0 0 4px 0;
-        }
-
-        .skip-link:focus {
-            top: 0;
-        }
-        
-        /* Footer accesible */
-        footer {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            padding: 3rem 0 2rem;
-            margin-top: 3rem;
-        }
-
-        footer a {
-            color: #a3ceff;
-        }
-
-        footer a:hover, footer a:focus {
-            color: white;
-        }
-
-        footer h3 {
-            margin-bottom: 1.25rem;
-            font-size: 1.3rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        footer h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            margin: -1px;
-            padding: 0;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-
-        /* Mejoras de accesibilidad para notificaciones */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background-color: var(--success-color);
-            color: white;
-            border-radius: 4px;
-            z-index: 1050;
-            max-width: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        .notification.error {
-            background-color: var(--error-color);
-        }
-
-        /* Tamaño de fuente ajustable */
-        @media (min-width: 768px) {
-            .font-size-control {
-                position: fixed;
-                bottom: 20px;
-                left: 20px;
-                background-color: white;
-                padding: 10px;
-                border-radius: 4px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                z-index: 1000;
-            }
-            
-            .font-size-btn {
-                background-color: var(--main-color);
-                color: white;
-                border: none;
-                width: 40px;
-                height: 40px;
-                border-radius: 4px;
-                margin: 0 5px;
-                font-weight: bold;
-                cursor: pointer;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Enlace para saltar la navegación para usuarios de teclado -->
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 
     <header class="text-center" role="banner">
-        <div class="container">
-            <h1>Bienvenido a nuestra tienda</h1>
-            <p>Los mejores sneakers a precios accesibles</p>
-        </div>
+      <div class="container">
+        <h1>Bienvenido a nuestra tienda</h1>
+        <p>Los mejores sneakers a precios accesibles</p>
+      </div>
     </header>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Navegación principal">
-        <div class="container">
-            <a class="navbar-brand" href="#" aria-label="Inicio de E-Commerce">E-Commerce</a>
-            <!-- Botón de colapso accesible con texto mejorado -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar u ocultar menú de navegación">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#products" aria-current="page">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#prices-heading">Precios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" aria-label="Ver carrito de compras (0 items)">Carrito (0)</a></li>
-                </ul>
-            </div>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light"
+      aria-label="Navegación principal"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="#" aria-label="Inicio de E-Commerce"
+          >E-Commerce</a
+        >
+        <!-- Botón de colapso accesible con texto mejorado -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Mostrar u ocultar menú de navegación"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#products" aria-current="page"
+                >Productos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#prices-heading">Precios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                aria-label="Ver carrito de compras (0 items)"
+                >Carrito (0)</a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
-    
+
     <main id="main-content" class="container my-5" role="main">
-        <section id="products" aria-labelledby="products-heading">
-            <h2 id="products-heading" class="text-center mb-4">Catálogo de Sneakers</h2>
-            <p class="text-center mb-4">Descubre nuestra selección de calzado deportivo de alta calidad.</p>
-            
-            <div class="row g-4">
-                <div class="col-md-4 mb-4">
-                    <div class="product-card text-center">
-                        <img src="product1.jpg" alt="Tenis deportivos color negro con detalles en rojo y suela blanca" class="img-fluid">
-                        <div class="product-details">
-                            <h3 class="product-name">Tenis Deportivos Negros</h3>
-                            <p>Perfectos para ejercicio y uso casual diario.</p>
-                            <p class="product-price" aria-label="Precio: 3,199 pesos">$3,199.00</p>
-                            <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary" aria-label="Añadir Tenis Deportivos Negros al carrito">Añadir al carrito</button>
-                                <button class="btn btn-outline-secondary" aria-label="Ver detalles de Tenis Deportivos Negros">Detalles</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card text-center">
-                        <img src="product2.jpg" alt="Tenis urbanos en color gris con detalles blancos y suela de goma" class="img-fluid">
-                        <div class="product-details">
-                            <h3 class="product-name">Tenis Urbanos Grises</h3>
-                            <p>Diseño moderno ideal para uso diario en la ciudad.</p>
-                            <p class="product-price" aria-label="Precio: 1,500 pesos">$1,500.00</p>
-                            <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary" aria-label="Añadir Tenis Urbanos Grises al carrito">Añadir al carrito</button>
-                                <button class="btn btn-outline-secondary" aria-label="Ver detalles de Tenis Urbanos Grises">Detalles</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card text-center">
-                        <img src="product3.jpg" alt="Tenis para correr en gris claro con detalles en negro y suela especial para running" class="img-fluid">
-                        <div class="product-details">
-                            <h3 class="product-name">Tenis Running Gris Claro</h3>
-                            <p>Especializados para corredores, con soporte adicional.</p>
-                            <p class="product-price" aria-label="Precio: 2,200 pesos">$2,200.00</p>
-                            <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary" aria-label="Añadir Tenis Running Gris Claro al carrito">Añadir al carrito</button>
-                                <button class="btn btn-outline-secondary" aria-label="Ver detalles de Tenis Running Gris Claro">Detalles</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section class="my-5" aria-labelledby="prices-heading">
-            <h2 id="prices-heading">Precios de los Productos</h2>
-            <div class="table-responsive">
-                <table class="table">
-                    <caption>Lista de precios y disponibilidad de nuestros productos</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Disponibilidad</th>
-                            <th scope="col">Tallas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Tenis Deportivos Negros</th>
-                            <td>$3,199.00</td>
-                            <td>En stock</td>
-                            <td>25-30</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Tenis Urbanos Grises</th>
-                            <td>$1,500.00</td>
-                            <td>En stock</td>
-                            <td>22-29</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Tenis Running Gris Claro</th>
-                            <td>$2,200.00</td>
-                            <td>Pocas unidades</td>
-                            <td>24-28</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p>Todos los precios incluyen IVA. Envío gratis en compras superiores a $1,000.</p>
-        </section>
+      <section id="products" aria-labelledby="products-heading">
+        <h2 id="products-heading" class="text-center mb-4">
+          Catálogo de Sneakers
+        </h2>
+        <p class="text-center mb-4">
+          Descubre nuestra selección de calzado deportivo de alta calidad.
+        </p>
 
-        <section id="discover" aria-labelledby="discover-heading" class="my-5">
-            <h2 id="discover-heading">Descubre más modelos en:</h2>
-            <a href="https://www.nike.com/mx/w/calzado-3rauvznik1zy7ok" target="_blank" rel="noopener noreferrer">
-                Nike.com <span class="visually-hidden">(se abre en una nueva pestaña)</span>
-            </a>
-            <p>Visita nuestra tienda física: Av. Principal #123, Ciudad de México.</p>
-        </section>
-
-        <section id="contact" class="my-5" aria-labelledby="contact-heading">
-            <h2 id="contact-heading" class="text-center mb-4">Contáctanos</h2>
-            <form class="mx-auto" style="max-width: 600px;" aria-labelledby="form-heading" novalidate>
-                <fieldset>
-                    <legend id="form-heading">Formulario de contacto</legend>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nombre completo:<span aria-hidden="true" class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" required aria-required="true" placeholder="Ej: Juan Pérez" aria-describedby="name-help">
-                        <div id="name-help" class="form-text">Tu nombre completo para identificarte.</div>
-                        <div class="error-message" id="name-error">Por favor, ingresa tu nombre completo.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo electrónico:<span aria-hidden="true" class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="email" name="email" required aria-required="true" placeholder="ejemplo@correo.com" aria-describedby="email-help" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                        <div id="email-help" class="form-text">Nunca compartiremos tu correo con terceros.</div>
-                        <div class="error-message" id="email-error">Por favor, ingresa un correo electrónico válido.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Teléfono:</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="(55) 1234-5678" aria-describedby="phone-help">
-                        <div id="phone-help" class="form-text">Opcional, para contactarte más rápido.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Mensaje:<span aria-hidden="true" class="text-danger">*</span></label>
-                        <textarea class="form-control" id="message" name="message" rows="4" required aria-required="true" placeholder="Escribe tu mensaje aquí..." aria-describedby="message-help"></textarea>
-                        <div id="message-help" class="form-text">Cuéntanos en qué podemos ayudarte.</div>
-                        <div class="error-message" id="message-error">Por favor, escribe tu mensaje.</div>
-                    </div>
-                    <div class="mb-4">
-                        <fieldset>
-                            <legend class="form-label">¿Qué tipo de productos te interesan?</legend>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="interest-running" name="interests[]" value="running">
-                                <label class="form-check-label" for="interest-running">Tenis para correr</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="interest-casual" name="interests[]" value="casual">
-                                <label class="form-check-label" for="interest-casual">Tenis casuales</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="interest-sport" name="interests[]" value="sport">
-                                <label class="form-check-label" for="interest-sport">Tenis deportivos</label>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter" checked>
-                            <label class="form-check-label" for="newsletter">
-                                Quiero recibir ofertas y novedades por correo electrónico
-                            </label>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <p><span aria-hidden="true" class="text-danger">*</span> <span class="small">Los campos marcados son obligatorios</span></p>
-                        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
-                    </div>
-                </fieldset>
-            </form>
-        </section>
-    </main>
-    
-    <footer role="contentinfo">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h3>E-Commerce</h3>
-                    <p>Tienda en línea de calzado deportivo y casual de alta calidad con los mejores precios del mercado.</p>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h3>Enlaces rápidos</h3>
-                    <nav aria-label="Enlaces del pie de página">
-                        <ul class="list-unstyled">
-                            <li><a href="#products">Productos</a></li>
-                            <li><a href="#prices-heading">Precios</a></li>
-                            <li><a href="#contact">Contacto</a></li>
-                            <li><a href="#">Política de privacidad</a></li>
-                            <li><a href="#">Términos y condiciones</a></li>
-                            <li><a href="#">Política de devoluciones</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h3>Contacto</h3>
-                    <address>
-                        <p>Av. Principal #123<br>
-                        Col. Centro, Ciudad de México, CP 06000</p>
-                        <p>Email: <a href="mailto:info@ecommerce.com">info@ecommerce.com</a><br>
-                        Tel: <a href="tel:+525512345678">(55) 1234-5678</a></p>
-                    </address>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <p>&copy; 2025 E-Commerce. Todos los derechos reservados.</p>
-                <p>
-                    <a href="#" aria-label="Declaración de accesibilidad">Declaración de accesibilidad</a> |
-                    <a href="#" aria-label="Mapa del sitio">Mapa del sitio</a>
+        <div class="row g-4">
+          <div class="col-md-4 mb-4">
+            <div class="product-card text-center">
+              <img
+                src="product1.jpg"
+                alt="Tenis deportivos color negro con detalles en rojo y suela blanca"
+                class="img-fluid"
+              />
+              <div class="product-details">
+                <h3 class="product-name">Tenis Deportivos Negros</h3>
+                <p>Perfectos para ejercicio y uso casual diario.</p>
+                <p class="product-price" aria-label="Precio: 3,199 pesos">
+                  $3,199.00
                 </p>
+                <div class="d-flex justify-content-between">
+                  <button
+                    class="btn btn-primary"
+                    aria-label="Añadir Tenis Deportivos Negros al carrito"
+                  >
+                    Añadir al carrito
+                  </button>
+                  <button
+                    class="btn btn-outline-secondary"
+                    aria-label="Ver detalles de Tenis Deportivos Negros"
+                  >
+                    Detalles
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="product-card text-center">
+              <img
+                src="product2.jpg"
+                alt="Tenis urbanos en color gris con detalles blancos y suela de goma"
+                class="img-fluid"
+              />
+              <div class="product-details">
+                <h3 class="product-name">Tenis Urbanos Grises</h3>
+                <p>Diseño moderno ideal para uso diario en la ciudad.</p>
+                <p class="product-price" aria-label="Precio: 1,500 pesos">
+                  $1,500.00
+                </p>
+                <div class="d-flex justify-content-between">
+                  <button
+                    class="btn btn-primary"
+                    aria-label="Añadir Tenis Urbanos Grises al carrito"
+                  >
+                    Añadir al carrito
+                  </button>
+                  <button
+                    class="btn btn-outline-secondary"
+                    aria-label="Ver detalles de Tenis Urbanos Grises"
+                  >
+                    Detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="product-card text-center">
+              <img
+                src="product3.jpg"
+                alt="Tenis para correr en gris claro con detalles en negro y suela especial para running"
+                class="img-fluid"
+              />
+              <div class="product-details">
+                <h3 class="product-name">Tenis Running Gris Claro</h3>
+                <p>Especializados para corredores, con soporte adicional.</p>
+                <p class="product-price" aria-label="Precio: 2,200 pesos">
+                  $2,200.00
+                </p>
+                <div class="d-flex justify-content-between">
+                  <button
+                    class="btn btn-primary"
+                    aria-label="Añadir Tenis Running Gris Claro al carrito"
+                  >
+                    Añadir al carrito
+                  </button>
+                  <button
+                    class="btn btn-outline-secondary"
+                    aria-label="Ver detalles de Tenis Running Gris Claro"
+                  >
+                    Detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <section class="my-5" aria-labelledby="prices-heading">
+        <h2 id="prices-heading">Precios de los Productos</h2>
+        <div class="table-responsive">
+          <table class="table">
+            <caption>
+              Lista de precios y disponibilidad de nuestros productos
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Disponibilidad</th>
+                <th scope="col">Tallas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Tenis Deportivos Negros</th>
+                <td>$3,199.00</td>
+                <td>En stock</td>
+                <td>25-30</td>
+              </tr>
+              <tr>
+                <th scope="row">Tenis Urbanos Grises</th>
+                <td>$1,500.00</td>
+                <td>En stock</td>
+                <td>22-29</td>
+              </tr>
+              <tr>
+                <th scope="row">Tenis Running Gris Claro</th>
+                <td>$2,200.00</td>
+                <td>Pocas unidades</td>
+                <td>24-28</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Todos los precios incluyen IVA. Envío gratis en compras superiores a
+          $1,000.
+        </p>
+      </section>
+
+      <section id="discover" aria-labelledby="discover-heading" class="my-5">
+        <h2 id="discover-heading">Descubre más modelos en:</h2>
+        <a
+          href="https://www.nike.com/mx/w/calzado-3rauvznik1zy7ok"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Nike.com
+          <span class="visually-hidden">(se abre en una nueva pestaña)</span>
+        </a>
+        <p>
+          Visita nuestra tienda física: Av. Principal #123, Ciudad de México.
+        </p>
+      </section>
+
+      <section id="contact" class="my-5" aria-labelledby="contact-heading">
+        <h2 id="contact-heading" class="text-center mb-4">Contáctanos</h2>
+        <form
+          class="mx-auto"
+          style="max-width: 600px"
+          aria-labelledby="form-heading"
+          novalidate
+        >
+          <fieldset>
+            <legend id="form-heading">Formulario de contacto</legend>
+            <div class="mb-3">
+              <label for="name" class="form-label"
+                >Nombre completo:<span aria-hidden="true" class="text-danger"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                required
+                aria-required="true"
+                placeholder="Ej: Juan Pérez"
+                aria-describedby="name-help"
+              />
+              <div id="name-help" class="form-text">
+                Tu nombre completo para identificarte.
+              </div>
+              <div class="error-message" id="name-error">
+                Por favor, ingresa tu nombre completo.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label"
+                >Correo electrónico:<span aria-hidden="true" class="text-danger"
+                  >*</span
+                ></label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+                aria-required="true"
+                placeholder="ejemplo@correo.com"
+                aria-describedby="email-help"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              />
+              <div id="email-help" class="form-text">
+                Nunca compartiremos tu correo con terceros.
+              </div>
+              <div class="error-message" id="email-error">
+                Por favor, ingresa un correo electrónico válido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Teléfono:</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phone"
+                name="phone"
+                placeholder="(55) 1234-5678"
+                aria-describedby="phone-help"
+              />
+              <div id="phone-help" class="form-text">
+                Opcional, para contactarte más rápido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label"
+                >Mensaje:<span aria-hidden="true" class="text-danger"
+                  >*</span
+                ></label
+              >
+              <textarea
+                class="form-control"
+                id="message"
+                name="message"
+                rows="4"
+                required
+                aria-required="true"
+                placeholder="Escribe tu mensaje aquí..."
+                aria-describedby="message-help"
+              ></textarea>
+              <div id="message-help" class="form-text">
+                Cuéntanos en qué podemos ayudarte.
+              </div>
+              <div class="error-message" id="message-error">
+                Por favor, escribe tu mensaje.
+              </div>
+            </div>
+            <div class="mb-4">
+              <fieldset>
+                <legend class="form-label">
+                  ¿Qué tipo de productos te interesan?
+                </legend>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="interest-running"
+                    name="interests[]"
+                    value="running"
+                  />
+                  <label class="form-check-label" for="interest-running"
+                    >Tenis para correr</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="interest-casual"
+                    name="interests[]"
+                    value="casual"
+                  />
+                  <label class="form-check-label" for="interest-casual"
+                    >Tenis casuales</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="interest-sport"
+                    name="interests[]"
+                    value="sport"
+                  />
+                  <label class="form-check-label" for="interest-sport"
+                    >Tenis deportivos</label
+                  >
+                </div>
+              </fieldset>
+            </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="newsletter"
+                  name="newsletter"
+                  checked
+                />
+                <label class="form-check-label" for="newsletter">
+                  Quiero recibir ofertas y novedades por correo electrónico
+                </label>
+              </div>
+            </div>
+            <div class="text-center">
+              <p>
+                <span aria-hidden="true" class="text-danger">*</span>
+                <span class="small">Los campos marcados son obligatorios</span>
+              </p>
+              <button type="submit" class="btn btn-primary">
+                Enviar mensaje
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h3>E-Commerce</h3>
+            <p>
+              Tienda en línea de calzado deportivo y casual de alta calidad con
+              los mejores precios del mercado.
+            </p>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h3>Enlaces rápidos</h3>
+            <nav aria-label="Enlaces del pie de página">
+              <ul class="list-unstyled">
+                <li><a href="#products">Productos</a></li>
+                <li><a href="#prices-heading">Precios</a></li>
+                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#">Política de privacidad</a></li>
+                <li><a href="#">Términos y condiciones</a></li>
+                <li><a href="#">Política de devoluciones</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h3>Contacto</h3>
+            <address>
+              <p>
+                Av. Principal #123<br />
+                Col. Centro, Ciudad de México, CP 06000
+              </p>
+              <p>
+                Email: <a href="mailto:info@ecommerce.com">info@ecommerce.com</a
+                ><br />
+                Tel: <a href="tel:+525512345678">(55) 1234-5678</a>
+              </p>
+            </address>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <p>&copy; 2025 E-Commerce. Todos los derechos reservados.</p>
+          <p>
+            <a href="#" aria-label="Declaración de accesibilidad"
+              >Declaración de accesibilidad</a
+            >
+            |
+            <a href="#" aria-label="Mapa del sitio">Mapa del sitio</a>
+          </p>
+        </div>
+      </div>
     </footer>
 
     <!-- Control de tamaño de fuente para usuarios con dificultades visuales -->
-    <div class="font-size-control d-none d-md-block" aria-label="Control de tamaño de texto">
-        <button class="font-size-btn" aria-label="Reducir tamaño de texto" id="decreaseText">A-</button>
-        <button class="font-size-btn" aria-label="Restablecer tamaño de texto" id="resetText">A</button>
-        <button class="font-size-btn" aria-label="Aumentar tamaño de texto" id="increaseText">A+</button>
+    <div
+      class="font-size-control d-none d-md-block"
+      aria-label="Control de tamaño de texto"
+    >
+      <button
+        class="font-size-btn"
+        aria-label="Reducir tamaño de texto"
+        id="decreaseText"
+      >
+        A-
+      </button>
+      <button
+        class="font-size-btn"
+        aria-label="Restablecer tamaño de texto"
+        id="resetText"
+      >
+        A
+      </button>
+      <button
+        class="font-size-btn"
+        aria-label="Aumentar tamaño de texto"
+        id="increaseText"
+      >
+        A+
+      </button>
     </div>
 
     <!-- Notificación de accesibilidad para usuarios de lectores de pantalla -->
-    <div class="notification" role="status" aria-live="polite" id="notification">
-        Producto añadido al carrito
+    <div
+      class="notification"
+      role="status"
+      aria-live="polite"
+      id="notification"
+    >
+      Producto añadido al carrito
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // JavaScript para mejorar la accesibilidad
-        document.addEventListener('DOMContentLoaded', function() {
-            // Control de tamaño de fuente
-            const decreaseBtn = document.getElementById('decreaseText');
-            const resetBtn = document.getElementById('resetText');
-            const increaseBtn = document.getElementById('increaseText');
-            const htmlElement = document.documentElement;
-            let currentSize = 100;
+      // JavaScript para mejorar la accesibilidad y funcionalidades
+      document.addEventListener("DOMContentLoaded", function () {
+        // Control de tamaño de fuente
+        const decreaseBtn = document.getElementById("decreaseText");
+        const resetBtn = document.getElementById("resetText");
+        const increaseBtn = document.getElementById("increaseText");
+        const htmlElement = document.documentElement;
+        let currentSize = 100;
 
-            if (decreaseBtn && resetBtn && increaseBtn) {
-                decreaseBtn.addEventListener('click', function() {
-                    if (currentSize > 80) {
-                        currentSize -= 10;
-                        htmlElement.style.fontSize = currentSize + '%';
-                        showNotification('Tamaño de texto reducido');
-                    }
-                });
+        if (decreaseBtn && resetBtn && increaseBtn) {
+          decreaseBtn.addEventListener("click", function () {
+            if (currentSize > 80) {
+              currentSize -= 10;
+              htmlElement.style.fontSize = currentSize + "%";
+              showNotification("Tamaño de texto reducido");
+            }
+          });
 
-                resetBtn.addEventListener('click', function() {
-                    currentSize = 100;
-                    htmlElement.style.fontSize = '100%';
-                    showNotification('Tamaño de texto restablecido');
-                });
+          resetBtn.addEventListener("click", function () {
+            currentSize = 100;
+            htmlElement.style.fontSize = "100%";
+            showNotification("Tamaño de texto restablecido");
+          });
 
-                increaseBtn.addEventListener('click', function() {
-                    if (currentSize < 150) {
-                        currentSize += 10;
-                        htmlElement.style.fontSize = currentSize + '%';
-                        showNotification('Tamaño de texto aumentado');
-                    }
-                });
+          increaseBtn.addEventListener("click", function () {
+            if (currentSize < 150) {
+              currentSize += 10;
+              htmlElement.style.fontSize = currentSize + "%";
+              showNotification("Tamaño de texto aumentado");
+            }
+          });
+        }
+
+        // Notificaciones accesibles
+        function showNotification(message, isError = false) {
+          const notification = document.getElementById("notification");
+          notification.textContent = message;
+          notification.style.display = "block";
+
+          if (isError) {
+            notification.classList.add("error");
+          } else {
+            notification.classList.remove("error");
+          }
+
+          setTimeout(function () {
+            notification.style.display = "none";
+          }, 3000);
+        }
+
+        // Validación de formulario
+        const contactForm = document.querySelector("#contact form");
+        if (contactForm) {
+          contactForm.addEventListener("submit", function (event) {
+            let isValid = true;
+
+            // Validar nombre
+            const nameInput = document.getElementById("name");
+            if (!nameInput.value.trim()) {
+              isValid = false;
+              nameInput.setAttribute("aria-invalid", "true");
+              document.getElementById("name-error").style.display = "block";
+            } else {
+              nameInput.setAttribute("aria-invalid", "false");
+              document.getElementById("name-error").style.display = "none";
             }
 
-            // Notificaciones accesibles
-            function showNotification(message) {
-                const notification = document.getElementById('notification');
-                notification.textContent = message;
-                notification.style.display = 'block';
-                
-                setTimeout(function() {
-                    notification.style.display = 'none';
-                }, 3000);
+            // Validar email
+            const emailInput = document.getElementById("email");
+            const emailPattern =
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(emailInput.value)) {
+              isValid = false;
+              emailInput.setAttribute("aria-invalid", "true");
+              document.getElementById("email-error").style.display = "block";
+            } else {
+              emailInput.setAttribute("aria-invalid", "false");
+              document.getElementById("email-error").style.display = "none";
             }
 
-            // Validación de formulario con feedback accesible
-            const form = document.querySelector('form');
-            
-            if (form) {
-                form.addEventListener('submit', function(event) {
+            // Validar mensaje
+            const messageInput = document.getElementById("message");
+            if (!messageInput.value.trim()) {
+              isValid = false;
+              messageInput.setAttribute("aria-invalid", "true");
+              document.getElementById("message-error").style.display = "block";
+            } else {
+              messageInput.setAttribute("aria-invalid", "false");
+              document.getElementById("message-error").style.display = "none";
+            }
+
+            if (!isValid) {
+              event.preventDefault();
+              showNotification(
+                "Por favor, completa correctamente todos los campos obligatorios",
+                true
+              );
+            } else {
+              event.preventDefault(); // En un entorno real, se quitaría esta línea y se enviaría el formulario
+              showNotification(
+                "Mensaje enviado correctamente. Gracias por contactarnos!"
+              );
+              contactForm.reset();
+            }
+          });
+        }
+
+        // Añadir funcionalidad a los botones "Añadir al carrito"
+        const addToCartButtons = document.querySelectorAll(
+          '.btn-primary[aria-label*="Añadir"]'
+        );
+        let cartCount = 0;
+        const cartLink = document.querySelector(
+          '.nav-link[aria-label*="Ver carrito"]'
+        );
+
+        addToCartButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            cartCount++;
+            // Extraer el nombre del producto del aria-label
+            const productName = button
+              .getAttribute("aria-label")
+              .replace("Añadir ", "")
+              .replace(" al carrito", "");
+            showNotification(`${productName} añadido al carrito`);
+
+            // Actualizar contador del carrito
+            if (cartLink) {
+              cartLink.textContent = `Carrito (${cartCount})`;
+              cartLink.setAttribute(
+                "aria-label",
+                `Ver carrito de compras (${cartCount} items)`
+              );
+            }
+
+            // Efecto visual para el botón
+            button.classList.add("btn-success");
+            button.textContent = "Añadido ✓";
+
+            setTimeout(() => {
+              button.classList.remove("btn-success");
+              button.textContent = "Añadir al carrito";
+            }, 2000);
+          });
+        });
+
+        // Añadir funcionalidad a los botones "Detalles"
+        const detailButtons = document.querySelectorAll(
+          '.btn-outline-secondary[aria-label*="Ver detalles"]'
+        );
+
+        detailButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Extraer el nombre del producto del aria-label
+            const productName = button
+              .getAttribute("aria-label")
+              .replace("Ver detalles de ", "");
+
+            // En un entorno real, esto abriría una página de detalles o un modal
+            // Para este ejemplo, mostramos una notificación
+            showNotification(`Mostrando detalles de ${productName}`);
+          });
+        });
+
+        // Añadir soporte para navegación con teclado en productos
+        const productCards = document.querySelectorAll(".product-card");
+
+        productCards.forEach((card) => {
+          // Hacer que las tarjetas de producto sean focusables
+          card.setAttribute("tabindex", "0");
+
+          // Añadir evento de teclado para simular clic en el botón principal al presionar Enter
+          card.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              const primaryButton = card.querySelector(".btn-primary");
+              if (primaryButton) {
+                primaryButton.click();
+              }
+            }
+          });
+        });
+
+        // Mejora de accesibilidad para enlaces externos
+        const externalLinks = document.querySelectorAll('a[target="_blank"]');
+
+        externalLinks.forEach((link) => {
+          // Añadir icono visual para indicar que es un enlace externo
+          const icon = document.createElement("i");
+          icon.className = "fas fa-external-link-alt";
+          icon.setAttribute("aria-hidden", "true");
+          icon.style.marginLeft = "5px";
+          link.appendChild(icon);
+
+          // Asegurar que tiene el atributo rel correcto por seguridad
+          if (
+            !link.getAttribute("rel") ||
+            !link.getAttribute("rel").includes("noopener")
+          ) {
+            link.setAttribute("rel", "noopener noreferrer");
+          }
+        });
+
+        // Modo de alto contraste (toggle)
+        const toggleContrastBtn = document.createElement("button");
+        toggleContrastBtn.className = "btn btn-sm btn-dark";
+        toggleContrastBtn.id = "toggleContrast";
+        toggleContrastBtn.innerHTML =
+          '<i class="fas fa-adjust" aria-hidden="true"></i> Contraste';
+        toggleContrastBtn.setAttribute(
+          "aria-label",
+          "Cambiar modo de contraste"
+        );
+        toggleContrastBtn.style.position = "fixed";
+        toggleContrastBtn.style.top = "20px";
+        toggleContrastBtn.style.right = "20px";
+        toggleContrastBtn.style.zIndex = "1000";
+        document.body.appendChild(toggleContrastBtn);
+
+        let highContrastMode = false;
+
+        toggleContrastBtn.addEventListener("click", function () {
+          if (highContrastMode) {
+            document.documentElement.style.removeProperty("--main-color");
+            document.documentElement.style.removeProperty("--main-color-dark");
+            document.documentElement.style.removeProperty("--text-color");
+            document.documentElement.style.removeProperty("--light-bg");
+            document.documentElement.style.removeProperty("--dark-bg");
+            highContrastMode = false;
+            showNotification("Modo de contraste normal activado");
+          } else {
+            document.documentElement.style.setProperty(
+              "--main-color",
+              "#0078d7"
+            );
+            document.documentElement.style.setProperty(
+              "--main-color-dark",
+              "#005a9e"
+            );
+            document.documentElement.style.setProperty(
+              "--text-color",
+              "#000000"
+            );
+            document.documentElement.style.setProperty("--light-bg", "#ffffff");
+            document.documentElement.style.setProperty("--dark-bg", "#000000");
+            highContrastMode = true;
+            showNotification("Modo de alto contraste activado");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
